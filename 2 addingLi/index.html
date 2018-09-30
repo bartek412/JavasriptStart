@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li.big {
+            font-size: 2em;
+
+        }
+    </style>
+</head>
+
+<body>
+    <button>Dodawanie li</button>
+    <ul></ul>
+    <script>
+        let number = 1;
+        document.querySelector("button").addEventListener('click', function () {
+            const li = document.createElement('li');
+            li.textContent = number;
+            if (number % 3 == 0) li.classList.add('big');
+            document.querySelector('ul').appendChild(li);
+            number += 2;
+        })
+    </script>
+</body>
+
+</html>
