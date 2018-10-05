@@ -7,6 +7,7 @@ const init = () => {
     btn.textContent = 'Dodaj 10 elementów listy'
     document.body.appendChild(btn);
     document.body.appendChild(ul);
+    btn.addEventListener('click', createLiElements);
 }
 
 const createLiElements = () => {
@@ -20,5 +21,4 @@ const createLiElements = () => {
     }
 }
 
-init();
-btn.addEventListener('click', createLiElements);
+init()
