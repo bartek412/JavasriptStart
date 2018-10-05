@@ -13,11 +13,9 @@ const init = () => {
 const createLiElements = () => {
     for (i = 0; i < 10; i++) {
         const li = document.createElement('li');
-        li.textContent = `element nr ${number}`;
-        li.style.fontSize = `${size}px`;
+        li.textContent = `element nr ${number++}`;
+        li.style.fontSize = `${size++}px`;
         ul.appendChild(li);
-        size++;
-        number++;
     }
 }
 
