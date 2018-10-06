@@ -1,6 +1,7 @@
 let size = 10;
 let number = 1;
 const btn = document.createElement('button');
+const btnResset = document.createElement('button');
 const ul = document.createElement('ul');
 
 const init = () => {
@@ -8,6 +9,9 @@ const init = () => {
     document.body.appendChild(btn);
     document.body.appendChild(ul);
     btn.addEventListener('click', createLiElements);
+    btnResset.textContent = 'usun'
+    document.body.appendChild(btnResset);
+    btnResset.addEventListener('click', cleanElements);
 }
 
 const createLiElements = () => {
@@ -18,5 +22,9 @@ const createLiElements = () => {
         ul.appendChild(li);
     }
 }
-
+const cleanElements = () => {
+    ul.textContent = '';
+    size = 10;
+    number = 1;
+}
 init()
