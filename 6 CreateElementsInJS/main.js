@@ -5,12 +5,12 @@ const btnResset = document.createElement('button');
 const ul = document.createElement('ul');
 
 const init = () => {
-    btn.textContent = 'Dodaj 10 elementów listy'
+    btn.textContent = 'Dodaj 10 elementów listy';
     document.body.appendChild(btn);
+    document.body.appendChild(btnResset);
     document.body.appendChild(ul);
     btn.addEventListener('click', createLiElements);
-    btnResset.textContent = 'usun'
-    document.body.appendChild(btnResset);
+    btnResset.textContent = 'usun';
     btnResset.addEventListener('click', cleanElements);
 }
 
