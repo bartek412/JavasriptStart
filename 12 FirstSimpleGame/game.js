@@ -21,7 +21,10 @@ imgs.forEach(function (img) {
     })
 });
 document.querySelector('.start').addEventListener('click', () => {
-    if (!userChoice) alert('Wybierz dłoń')
+    if (!userChoice) {
+        alert('Wybierz dłoń');
+        return;
+    }
     let whoWin;
     let computerChoice = elementsOfGame[Math.floor(Math.random() * elementsOfGame.length)];
     if (userChoice == computerChoice) {
