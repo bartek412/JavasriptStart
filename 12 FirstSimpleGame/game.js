@@ -1,79 +1,78 @@
 const imgs = document.querySelectorAll('.select img');
 const spansLeftPanel = document.querySelectorAll('.panel-left span')
-let userChoice = "";
-const elementsOfGame = ["papier", "kamień", "nożyczki"]
-let win = 0;
-let loss = 0;
-let draw = 0;
-let games = 0;
+const gameSummary = {
+    wins: 0,
+    losses: 0,
+    draws: 0,
+}
+const game = {
+    userChoice: "",
+    computerChoice: "",
+    whoWin: "",
+}
 
 function CleanUserChoice() {
     imgs.forEach((item) => {
-        item.style.boxShadow = '0 0 0 0 yellow';
-        userChoice = '';
+        item.style.boxShadow = '';
+        game.userChoice = '';
     })
 }
 imgs.forEach(function (img) {
     img.addEventListener('click', function () {
         CleanUserChoice();
         img.style.boxShadow = '0 0 2px 4px yellow';
-        userChoice = img.dataset.option;
+        game.userChoice = img.dataset.option;
     })
 });
 document.querySelector('.start').addEventListener('click', () => {
-    if (!userChoice) {
-        alert('Wybierz dłoń');
-        return;
-    }
-    let whoWin;
-    let computerChoice = elementsOfGame[Math.floor(Math.random() * elementsOfGame.length)];
-    if (userChoice == computerChoice) {
-        draw++;
-        whoWin = 'Remis';
+    if (!game.userChoice) return alert('Wybierz dłoń');
+    game.computerChoice = imgs[Math.floor(Math.random() * imgs.length)].dataset.option;
+    if (game.userChoice == game.computerChoice) {
+        gameSummary.draws++;
+        game.whoWin = 'Remis';
     } else {
-        switch (userChoice) {
+        switch (game.userChoice) {
             case 'papier':
-                if (computerChoice == 'kamień') {
-                    win++;
-                    whoWin = 'Ty';
+                if (game.computerChoice == 'kamień') {
+                    gameSummary.wins++;
+                    game.whoWin = 'Ty';
                 } else {
-                    loss++;
-                    whoWin = 'Komputer :(';
+                    gameSummary.losses++;
+                    game.whoWin = 'Komputer :(';
                 }
                 break;
             case 'kamień':
-                if (computerChoice == 'nożyczki') {
-                    win++;
-                    whoWin = 'Ty';
+                if (game.computerChoice == 'nożyczki') {
+                    gameSummary.wins++;
+                    game.whoWin = 'Ty';
                 } else {
-                    loss++;
-                    whoWin = 'Komputer :(';
+                    gameSummary.losses++;
+                    game.whoWin = 'Komputer :(';
                 }
                 break;
             default:
-                if (computerChoice == 'papier') {
-                    win++;
-                    whoWin = 'Ty';
+                if (game.computerChoice == 'papier') {
+                    gameSummary.wins++;
+                    game.whoWin = 'Ty';
                 } else {
-                    loss++;
-                    whoWin = 'Komputer :(';
+                    gameSummary.losses++;
+                    game.whoWin = 'Komputer :(';
                 }
                 break;
 
 
         }
     }
-    games++;
     spansLeftPanel.forEach(span => {
 
-        if (span.dataset.summary == "your-choice") span.textContent = userChoice;
-        else if (span.dataset.summary == "ai-choice") span.textContent = computerChoice;
-        else span.textContent = whoWin;
+        if (span.dataset.summary == "your-choice") span.textContent = game.userChoice;
+        else if (span.dataset.summary == "ai-choice") span.textContent = game.computerChoice;
+        else span.textContent = game.whoWin;
 
     })
     CleanUserChoice();
-    document.querySelector('.numbers span').textContent = games;
-    document.querySelector('.wins span').textContent = win;
-    document.querySelector('.losses span').textContent = loss;
-    document.querySelector('.draws span').textContent = draw;
+    document.querySelector('.numbers span').textContent = gameSummary.wins + gameSummary.losses + gameSummary.draws;
+    document.querySelector('.wins span').textContent = gameSummary.wins;
+    document.querySelector('.losses span').textContent = gameSummary.losses;
+    document.querySelector('.draws span').textContent = gameSummary.draws;
 })
