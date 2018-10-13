@@ -52,8 +52,8 @@ const CheckResult = function (player, ai) {
 imgs.forEach(function (img) {
     img.addEventListener('click', function () {
         CleanUserChoice();
-        img.style.boxShadow = '0 0 2px 4px yellow';
-        game.userChoice = img.dataset.option;
+        this.style.boxShadow = '0 0 2px 4px yellow';
+        game.userChoice = this.dataset.option;
     })
 });
 document.querySelector('.start').addEventListener('click', () => {
