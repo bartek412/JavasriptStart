@@ -4,6 +4,29 @@ const gameSummary = {
     wins: 0,
     losses: 0,
     draws: 0,
+    PublishResult: function (result) {
+        if (result === 'draw') {
+            gameSummary.draws++;
+            game.whoWin = 'Remis';
+        } else if (result === 'win') {
+            gameSummary.wins++;
+            game.whoWin = 'Ty';
+        } else {
+            gameSummary.losses++;
+            game.whoWin = 'Komputer :(';
+        }
+        spansLeftPanel.forEach(span => {
+
+            if (span.dataset.summary == "your-choice") span.textContent = game.userChoice;
+            else if (span.dataset.summary == "ai-choice") span.textContent = game.computerChoice;
+            else span.textContent = game.whoWin;
+
+        })
+        document.querySelector('.numbers span').textContent = gameSummary.wins + gameSummary.losses + gameSummary.draws;
+        document.querySelector('.wins span').textContent = gameSummary.wins;
+        document.querySelector('.losses span').textContent = gameSummary.losses;
+        document.querySelector('.draws span').textContent = gameSummary.draws;
+    }
 }
 const game = {
     userChoice: "",
@@ -17,6 +40,15 @@ function CleanUserChoice() {
         game.userChoice = '';
     })
 }
+const CheckResult = function (player, ai) {
+    if (player === ai) {
+        return 'draw';
+    } else if ((player === "papier" && ai === "kamień") || (player === "kamień" && ai === "nożyczki") || (player === "nożyczki" && ai === "papier")) {
+        return 'win';
+    } else {
+        return 'loss';
+    }
+}
 imgs.forEach(function (img) {
     img.addEventListener('click', function () {
         CleanUserChoice();
@@ -27,52 +59,7 @@ imgs.forEach(function (img) {
 document.querySelector('.start').addEventListener('click', () => {
     if (!game.userChoice) return alert('Wybierz dłoń');
     game.computerChoice = imgs[Math.floor(Math.random() * imgs.length)].dataset.option;
-    if (game.userChoice == game.computerChoice) {
-        gameSummary.draws++;
-        game.whoWin = 'Remis';
-    } else {
-        switch (game.userChoice) {
-            case 'papier':
-                if (game.computerChoice == 'kamień') {
-                    gameSummary.wins++;
-                    game.whoWin = 'Ty';
-                } else {
-                    gameSummary.losses++;
-                    game.whoWin = 'Komputer :(';
-                }
-                break;
-            case 'kamień':
-                if (game.computerChoice == 'nożyczki') {
-                    gameSummary.wins++;
-                    game.whoWin = 'Ty';
-                } else {
-                    gameSummary.losses++;
-                    game.whoWin = 'Komputer :(';
-                }
-                break;
-            default:
-                if (game.computerChoice == 'papier') {
-                    gameSummary.wins++;
-                    game.whoWin = 'Ty';
-                } else {
-                    gameSummary.losses++;
-                    game.whoWin = 'Komputer :(';
-                }
-                break;
-
-
-        }
-    }
-    spansLeftPanel.forEach(span => {
-
-        if (span.dataset.summary == "your-choice") span.textContent = game.userChoice;
-        else if (span.dataset.summary == "ai-choice") span.textContent = game.computerChoice;
-        else span.textContent = game.whoWin;
-
-    })
+    const gameResult = CheckResult(game.userChoice, game.computerChoice)
+    gameSummary.PublishResult(gameResult);
     CleanUserChoice();
-    document.querySelector('.numbers span').textContent = gameSummary.wins + gameSummary.losses + gameSummary.draws;
-    document.querySelector('.wins span').textContent = gameSummary.wins;
-    document.querySelector('.losses span').textContent = gameSummary.losses;
-    document.querySelector('.draws span').textContent = gameSummary.draws;
 })
