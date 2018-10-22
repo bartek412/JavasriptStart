@@ -1,17 +1,13 @@
-let startDate;
-let endDate;
+let startTime = 0;
 let setIntervalIndex;
 const div = document.querySelector('.time div');
 
-function timer(e) {
+function timer() {
     if (this.textContent == 'Start') {
-        startDate = new Date().getTime();
         this.textContent = 'Zatrzymaj';
         setIntervalIndex = setInterval(function () {
-            endDate = new Date().getTime();
-            const time = endDate - startDate;
-            let sec = (time / 1000).toFixed(2);
-            div.textContent = sec;
+            startTime++;
+            div.textContent = (startTime / 100).toFixed(2);
         }, 10)
 
     } else {
@@ -26,4 +22,5 @@ document.querySelector('button.reset').addEventListener('click', () => {
     div.textContent = '---';
     clearInterval(setIntervalIndex);
     document.querySelector('button.main').textContent = 'Start';
+    startTime = 0;
 });
